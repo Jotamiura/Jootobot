@@ -119,7 +119,10 @@ def click_image(image_name, confidence=0.8, timeout=30, region=None):
 
 def post_to_google_chat(title, description, jooto_url):
     """最終的なメッセージをGoogle ChatのWebhookに「カード形式」で送信する関数"""
-    chat_webhook_url = "https://chat.googleapis.com/v1/spaces/AAQAuqzzcO0/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=hOMzsWn0PDpuxWXjJZAi_54NNx8LSTKDIdYpHAbIlpI" 
+    chat_webhook_url = os.environ.get('GOOGLE_CHAT_WEBHOOK_URL')
+    if not chat_webhook_url:
+        print("エラー: 環境変数 'GOOGLE_CHAT_WEBHOOK_URL' が設定されていません。")
+        return
     
     # Google Chatに送信する「カード」のデータを構築
     payload = {
